@@ -1,0 +1,32 @@
+{
+  "name": "gatsby-source-jira",
+  "version": "1.0.0",
+  "description": "Gatsby Jira data source",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewsommer/gatsby-source-jira.git"
+  },
+  "keywords": [
+    "Jira",
+    "Gatsby",
+    "Data-Source"
+  ],
+  "author": "Matt Sommer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matthewsommer/gatsby-source-jira/issues"
+  },
+  "homepage": "https://github.com/matthewsommer/gatsby-source-jira#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "gatsby-source-filesystem": "^1.5.38",
+    "mocha": "^5.2.0",
+    "node-fetch": "^2.1.2",
+    "query-string": "^6.1.0"
+  },
+  "devDependencies": {}
+}
