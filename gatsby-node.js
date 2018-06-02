@@ -2,11 +2,20 @@
  * Gatsby's Node API Interface to Jira Data Source
  * Matt Sommer
  */
+//mport HttpService from './http-service';
+var HttpService = require('./http-service');
 
 const axios = require('axios');
 const crypto = require('crypto');
+
+//TODO: I don't think this is needed here...
 const { createFilePath } = require('gatsby-source-filesystem');
 const path = require(`path`);
+
+exports.onCreateNode = async function onCreateNode({ node, getNode, loadNodeContent, boundActionCreators },pluginOptions) {
+    const { createNode, createParentChildLink } = boundActionCreators;
+    // Transform data here
+}
 
 exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
 
@@ -16,14 +25,16 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
     // Log the host configuration
     console.log("Plugin Jira Source: Config Settings:", configOptions.host);
 
+    var httpService = new HttpService(configOptions.host);
+
     const { createNode } = boundActionCreators;
 
-    const fetchTasks = () => jiraQuery(configOptions.host, '', 0)
+    const fetchTasks = () => httpService.jiraQuery('', 0)
         .then((response) => {
             return response;
         })
         .then((response) => {
-            var issues = axios.all(queryArray(configOptions.host, response.data.total))
+            var issues = axios.all(httpService.queryArray(configOptions.host, response.data.total))
                 .then(function (results) {
                     let temp = results.map(r => r.data.issues);
                     temp.push(response.data.issues);
@@ -35,6 +46,8 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
 
     // Fetch all the Jira Issues
     const res = await fetchTasks();
+
+    console.log("Jira Issues returned: " + res.length);
 
     // When results retrieved create Nodes for each entity
     console.log("Plugin Jira Source: Creating source nodes")
@@ -72,7 +85,7 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
             epic: task.jiraFields.customfield_10009,
             jiraIssue: task,
             // fieldsList: task.fields, // their is a field called 48x48 and for some reason Gatsby doesn't like that name...
-            slug: sanitizeURLPath(task.jiraFields.project.name) + "/" + sanitizeURLPath(task.jiraFields.summary),
+            slug: HttpService.sanitizeURLPath(task.jiraFields.project.name) + "/" + HttpService.sanitizeURLPath(task.jiraFields.summary),
         }
 
         // Get content digest of node. (Required field)
@@ -89,20 +102,4 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
     });
 
     return;
-}
-
-function sanitizeURLPath(input) {
-    return input.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase();
-}
-
-function jiraQuery(host, jql, startAt) {
-    return axios.get('https://' + host + '/rest/api/2/search?jql=' + jql + '&startAt=' + startAt + '&maxResults=100');
-}
-
-function queryArray(host, total) {
-    var queries = [];
-    for (var i = 0; i < Math.floor(total / 100); i++) {
-        queries[i] = jiraQuery(host, '', (i + 1) * 100);
-    }
-    return queries;
 }
