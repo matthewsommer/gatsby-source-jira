@@ -27,6 +27,8 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
     // Log the host configuration
     console.log("Plugin Jira Source: Config Settings:", configOptions.host);
 
+    console.log(configOptions.epic_field_id);
+
     var httpService = new HttpService(configOptions.host);
 
     const fetchTasks = () => httpService.jiraQuery('', 0)
@@ -82,9 +84,8 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
             labels: task.jiraFields.labels,
             components: task.jiraFields.components,
             project: task.jiraFields.project.name,
-            epic: task.jiraFields.customfield_10009,
+            epic: task.jiraFields[configOptions.epic_field_id],
             jiraIssue: task,
-            // fieldsList: task.fields, // their is a field called 48x48 and for some reason Gatsby doesn't like that name...
             slug: HttpService.sanitizeURLPath(task.jiraFields.project.name) + "/" + HttpService.sanitizeURLPath(task.jiraFields.summary),
         }
 
