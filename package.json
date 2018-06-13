@@ -16,7 +16,7 @@
     "Data-Source"
   ],
   "author": "Matt Sommer",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/matthewsommer/gatsby-source-jira/issues"
   },
