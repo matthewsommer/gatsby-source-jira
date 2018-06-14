@@ -3,18 +3,15 @@ const axios = require('axios');
 module.exports = class HttpService {
 
     constructor(host) {
-        const httpService = axios.create({
+        this.httpService = axios.create({
             baseURL: 'https://' + host + '/rest/api/2/search?jql=',
         });
-        this.httpService = httpService;
     }
 
     get(path, callback) {
         return this.httpService.get(path).then(
             (response) => callback(response.status, response.data)
-        ).catch(function (error) {
-            console.log(error);
-        });
+        ).catch(console.log);
     }
 
     static sanitizeURLPath(input) {
@@ -28,14 +25,12 @@ module.exports = class HttpService {
                 startAt: startAt,
                 maxResults: "100"
             }
-        }).catch(function (error) {
-            console.log(error);
-        });
+        }).catch(console.log);
     }
 
     queryArray(host, total) {
-        var queries = [];
-        for (var i = 0; i < Math.floor(total / 100); i++) {
+        const queries = [];
+        for (let i = 0; i < Math.floor(total / 100); i++) {
             queries[i] = this.jiraQuery('', (i + 1) * 100);
         }
         return queries;
