@@ -4,7 +4,7 @@
   "description": "Gatsby Jira data source",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha test/**/*.js",
     "lint": "eslint . --ext js",
     "lint:fix": "eslint . --ext js --fix"
   },
@@ -26,11 +26,13 @@
   "dependencies": {
     "axios": "^0.18.0",
     "gatsby-source-filesystem": "^1.5.38",
-    "mocha": "^5.2.0",
     "node-fetch": "^2.1.2",
     "query-string": "^6.1.0"
   },
   "devDependencies": {
-    "eslint": "^4.19.1"
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "mocha": "^5.2.0",
+    "sinon": "^6.0.0"
   }
 }
