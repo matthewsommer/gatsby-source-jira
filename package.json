@@ -25,7 +25,7 @@
   "homepage": "https://github.com/matthewsommer/gatsby-source-jira#readme",
   "dependencies": {
     "axios": "^0.18.0",
-    "gatsby-source-filesystem": "^1.5.38",
+    "gatsby-source-filesystem": "^1.5.39",
     "node-fetch": "^2.1.2",
     "query-string": "^6.1.0"
   },

@@ -23,6 +23,7 @@ exports.sourceNodes = async ({ boundActionCreators }, configOptions) => {
         .replace(/32x32/g, 'size32x32')
         .replace(/48x48/g, 'size48x48')
         .replace(/fields/g, 'jiraFields') // Gatsby already uses the fields attribute
+        .replace(/\/secure\/attachment\//g, 'https://' + configOptions.host + '/secure/attachment/')
     );
     
     const node = {
