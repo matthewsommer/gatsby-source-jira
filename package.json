@@ -1,6 +1,6 @@
 {
   "name": "gatsby-source-jira",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Gatsby Jira data source",
   "main": "index.js",
   "scripts": {
