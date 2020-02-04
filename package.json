@@ -15,7 +15,8 @@
   "keywords": [
     "Jira",
     "Gatsby",
-    "Data-Source"
+    "Data-Source",
+    "gatsby-plugin"
   ],
   "author": "Matt Sommer",
   "license": "MIT",
